@@ -161,8 +161,8 @@ class Camera2D extends Structure {
 interface Raylib extends Library {
     void InitWindow(int width, int height, String title)
     void CloseWindow()
-    boolean WindowShouldClose()
-    boolean IsWindowReady()
+    byte WindowShouldClose() // potentiell kaput
+    byte IsWindowReady() // potentiell kaput
 
     void SetTargetFPS(int fps)
     float GetFrameTime()
@@ -173,7 +173,7 @@ interface Raylib extends Library {
     void ClearBackground(Color.Value color)
     void EndDrawing()
 
-    Color.Value GetColor(long hexValue)
+    Color.Value GetColor(int hexValue) // kaputt
 
     void DrawFPS(int posX, int posY)
     void DrawText(String text, int posX, int posY, int fontSize, Color.Value color)
