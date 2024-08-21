@@ -1,6 +1,0 @@
-#!/usr/bin/bash
-
-
-groovy -cp raylib.so App.groovy
-
-
