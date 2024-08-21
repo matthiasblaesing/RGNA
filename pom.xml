@@ -20,7 +20,75 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>target/generated-resources/raylib</directory>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.9.0</version>
+                <executions>
+                    <execution>
+                        <id>raylib-linux-x86-64</id>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz</url>
+                            <unpack>true</unpack>
+                            <includes>
+                                <include>raylib-5.0_linux_amd64/lib/libraylib.so.5.0.0</include>
+                            </includes>
+                            <fileMappers>
+                                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                                    <targetName>libraylib.so</targetName>
+                                </fileMapper>
+                            </fileMappers>
+                            <outputDirectory>${project.basedir}/target/generated-resources/raylib/linux-x86-64</outputDirectory>
+                            <sha512>3348d80d88f5d48c927ef81ecb9a915093cca15e997dec5eab5df9b02db1ff5583caf0a76178aa9eb091c8d5914fdffacd437af901963efe96aa578ac250f810</sha512>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>raylib-win32-x86-64</id>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip</url>
+                            <unpack>true</unpack>
+                            <includes>
+                                <include>raylib-5.0_win64_msvc16/lib/raylib.dll</include>
+                            </includes>
+                            <fileMappers>
+                                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                                    <targetName>raylib.dll</targetName>
+                                </fileMapper>
+                            </fileMappers>
+                            <outputDirectory>${project.basedir}/target/generated-resources/raylib/win32-x86-64</outputDirectory>
+                            <sha512>9db66e48846f839a9bba728c0232ac5839f99a27bb0da7bbd433f918f70f4a462b70a2466b9da3960836fe0b2f7bcd333adf6a527ea7acfeddac0fe943d751cb</sha512>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Ensure resources:resources is ran after download -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>explicit-run</id>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
